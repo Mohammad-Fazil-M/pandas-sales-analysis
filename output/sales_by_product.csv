@@ -1,0 +1,6 @@
+product_report,row_count,total_quantity,total_revenue,valid_revenue_count,revenue_completeness
+Laptop,3,4.0,3200.0,3,complete
+Keyboard,1,3.0,105.0,1,complete
+Mouse,2,5.0,100.0,1,partial
+Unknown product,1,4.0,80.0,1,complete
+Monitor,1,2.0,,0,missing

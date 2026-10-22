@@ -1,0 +1,10 @@
+,value
+raw_rows,8.0
+missing_product_rows,1.0
+missing_category_rows,1.0
+missing_quantity_rows,1.0
+missing_unit_price_rows,1.0
+invalid_date_rows,1.0
+missing_total_price_rows,2.0
+duplicate_order_id_rows,2.0
+recorded_revenue,3485.0
