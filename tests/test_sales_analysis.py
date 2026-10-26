@@ -1,7 +1,7 @@
 
 import pandas as pd
 import pytest
-from sales_analysis import load_data, prepare_data,analyze_sales
+from sales_analysis import load_data, prepare_data ,analyze_sales ,validate_results
 
 @pytest.fixture
 def prepare_df():
@@ -41,3 +41,18 @@ def test_analyze_sales_revenue_completeness(prepare_df):
 def test_analyze_sales_revenue_completeness_missing(prepare_df):
     result=analyze_sales(prepare_df)
     assert result.loc["Monitor","revenue_completeness"]=="missing"
+def test_analyze_sales_row_count(prepare_df):
+    result=analyze_sales(prepare_df)
+    assert result.loc["Laptop","row_count"]==3
+def test_analyze_sales_total_revenue(prepare_df):
+    result=analyze_sales(prepare_df)
+    assert result.loc["Laptop","total_revenue"]==3200
+def test_validate_result_revenue_totals_match(prepare_df):
+    result=analyze_sales(prepare_df)
+    validation_report=validate_results(prepare_df,result)
+    assert validation_report["revenue_totals_match"]
+def test_validate_result_detects_revenue_mismatch(prepare_df):
+    result=analyze_sales(prepare_df)
+    result.loc["Laptop","total_revenue"]=3300
+    validation_report=validate_results(prepare_df,result)
+    assert not(validation_report["revenue_totals_match"])
