@@ -50,13 +50,16 @@ def prepare_data(df_raw):
 
 def build_quality_report(df_raw, df):
     """Summarize important data quality issues."""
+    invalid_dates=df_raw["date"].notna() & df["date"].isna()
+
     report = pd.Series({
         "raw_rows": len(df_raw),
         "missing_product_rows": df["product"].isna().sum(),
         "missing_category_rows": df["category"].isna().sum(),
         "missing_quantity_rows": df["quantity"].isna().sum(),
         "missing_unit_price_rows": df["unit_price"].isna().sum(),
-        "invalid_date_rows": df["date"].isna().sum(),
+        "invalid_date_rows": invalid_dates.sum(),
+        "missing_date_rows": df_raw["date"].isna().sum(),
         "missing_total_price_rows": df["total_price"].isna().sum(),
         "duplicate_order_id_rows": df.duplicated(
             subset=["order_id"], keep=False
