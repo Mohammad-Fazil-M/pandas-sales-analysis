@@ -59,10 +59,16 @@ def test_validate_result_detects_revenue_mismatch(prepare_df):
     validation_report = validate_results(prepare_df,result)
     assert not(validation_report["revenue_totals_match"])
 def test_build_quality_report():
-    df_row=load_data()
-    my_df=df_row.copy()
+    df_raw=load_data()
+    my_df=df_raw.copy()
     my_df.loc[0,"date"]=None
     df=prepare_data(my_df)
     report=build_quality_report(my_df,df)
     assert report["missing_date_rows"]==1 
     assert report["invalid_date_rows"]==1
+def test_build_quality_report_missing_total_price_pct():
+    df_raw=load_data()
+    df=prepare_data(df_raw)
+    report=build_quality_report(df_raw,df)
+    assert report["missing_total_price_pct"]==pytest.approx(25.0)
+    
